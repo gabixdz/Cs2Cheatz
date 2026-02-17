@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cs2cheatz changelog</title>
+<style>
+  /* ROOT VARIABLES */
+  :root {
+    --accent: #2da3ff;
+    --bg: #050b14;
+    --text: #eaf2ff;
+    --muted: #9db7d6;
+    --paid: #ff5c5c;
+    --free: #4dff88;
+    --other: #ffb84d;
+    --risky: #ffd84d;
+    --link: #2de2ff;
+  }
+
+  /* GLOBAL STYLES */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: radial-gradient(circle at top, #0a1c33, #040910);
+    color: var(--text);
+    text-transform: lowercase;
+  }
+
+  /* HEADER & TITLE */
+  header {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-transform: lowercase;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 30px;
+    text-transform: lowercase;
+  }
+
+  /* NAVIGATION BUTTONS */
+  .nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    background: linear-gradient(180deg, #0c213b, #08182c);
+    color: var(--text);
+    border: 1px solid #1f4c78;
+    padding: 8px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    text-transform: lowercase;
+  }
+
+  .nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(45, 163, 255, 0.6);
+  }
+
+  .nav-btn img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+
+  /* CHANGELOG CONTAINER */
+  .changelog-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 16px;
+  }
+
+  /* CHANGELOG ITEM */
+  .changelog-item {
+    background: linear-gradient(180deg, #0b1f36, #08182b);
+    border: 1px solid #1f4c78;
+    border-radius: 14px;
+    padding: 18px;
+    transition: 0.25s;
+  }
+
+  .changelog-item:hover {
+    box-shadow: 0 0 18px rgba(45, 163, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .changelog-version {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .version-badge {
+    background: linear-gradient(180deg, #ff5c5c, #e84444);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
+    text-transform: lowercase;
+  }
+
+  .version-badge.latest {
+    background: linear-gradient(180deg, #4dff88, #35cc6a);
+  }
+
+  .version-date {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: lowercase;
+  }
+
+  .changelog-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    color: var(--accent);
+    text-transform: lowercase;
+  }
+
+  .changelog-content {
+    color: var(--text);
+    line-height: 1.6;
+    text-transform: lowercase;
+  }
+
+  .changelog-content ul {
+    margin: 8px 0;
+    padding-left: 20px;
+  }
+
+  .changelog-content li {
+    margin: 4px 0;
+  }
+
+  .changelog-content .feature {
+    color: var(--free);
+  }
+
+  .changelog-content .fix {
+    color: var(--other);
+  }
+
+  .changelog-content .update {
+    color: var(--accent);
+  }
+
+  /* CONFETTI ANIMATION */
+  .confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fall 0.9s forwards;
+  }
+
+  @keyframes fall {
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* LOADING OVERLAY */
+  #loadingOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 11, 20, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 9999;
+  }
+
+  #loadingOverlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid var(--accent);
+    animation: spin 1s linear infinite;
+    margin-bottom: 14px;
+  }
+
+  #loadingText {
+    text-transform: lowercase;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 30px 20px 20px;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: lowercase;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 750px) {
+    .nav-buttons {
+      flex-wrap: wrap;
+    }
+
+    .changelog-container {
+      gap: 12px;
+    }
+
+    .changelog-item {
+      padding: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER SECTION -->
+  <header>cs2cheatz</header>
+  <div class="subtitle">changelog</div>
+
+  <!-- NAVIGATION BUTTONS SECTION -->
+  <div class="nav-buttons">
+    <a href="./index.html" class="nav-btn">
+      <img src="images/home.png" alt="home">
+      <span>home</span>
+    </a>
+    <a href="./credits.html" class="nav-btn">
+      <img src="images/faq.png" alt="faq">
+      <span>faq</span>
+    </a>
+  </div>
+
+  <!-- CHANGELOG CONTAINER SECTION -->
+  <div class="changelog-container">
+
+    <!-- VERSION 0.2 -->
+    <div class="changelog-item">
+      <div class="changelog-version">
+        <span class="version-badge latest">v0.2</span>
+        <span class="version-date">2026-02-17</span>
+      </div>
+      <h3 class="changelog-title">major improvements</h3>
+      <div class="changelog-content">
+        <ul>
+          <li><span class="feature">✨ feature</span>: added faq, credits, changelog and telegram buttons</li>
+          <li><span class="feature">✨ feature</span>: added cracks and risky tabs</li>
+          <li><span class="feature">✨ feature</span>: added a logo</li>
+          <li><span class="update">🔩 minor changes</span>: made the code look better, added the version at the bottom</li>
+          <li><span class="update">🔄 update</span>: reorganized all code with better structure and comments</li>
+          <li><span class="update">🔄 update</span>: converted all text to lowercase for consistency</li>
+          <li><span class="update">🔄 update</span>: updated all descriptiond to cheats to match their funcionality</li>
+          <li><span class="fix">🔧 fix</span>: improved confetti animation effects on pc</li>
+          <li><span class="fix">🔧 fix</span>: enhanced hover effects on buttons</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VERSION 0.1 -->
+    <div class="changelog-item">
+      <div class="changelog-version">
+        <span class="version-badge">v0.1</span>
+        <span class="version-date">2026-02-06</span>
+      </div>
+      <h3 class="changelog-title">initial release</h3>
+      <div class="changelog-content">
+        <ul>
+          <li><span class="feature">✨ feature</span>: complete cheat database with paid, free, risky, and other categories</li>
+          <li><span class="feature">✨ feature</span>: search functionality to filter cheats</li>
+          <li><span class="feature">✨ feature</span>: detailed cheat information pages</li>
+          <li><span class="feature">✨ feature</span>: confetti celebration effects</li>
+          <li><span class="feature">✨ feature</span>: loading overlay animations</li>
+          <li><span class="feature">✨ feature</span>: responsive design for mobile devices</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER SECTION -->
+  <footer>cs2cheatz v0.2</footer>
+
+  <!-- LOADING OVERLAY SECTION -->
+  <div id="loadingOverlay">
+    <div class="loader"></div>
+    <div id="loadingText">loading…</div>
+  </div>
+
+</body>
+</html>
